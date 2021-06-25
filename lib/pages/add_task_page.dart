@@ -1,16 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mamushi/models/task.dart';
 
 class AddTaskPage extends StatefulWidget {
-  final List<Task> undoneTaskList;
-  AddTaskPage({this.undoneTaskList});
+// ローカル環境で受け取り
+  // final List<Task> undoneTaskList;
+  // AddTaskPage({this.undoneTaskList});
   @override
   _AddTaskPageState createState() => _AddTaskPageState();
+
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
   TextEditingController titleController = TextEditingController();
 
+  Future<void> insertTask(String title) async{
+    var collection =Firestore.instance.collection('task');
+    collection.add({
+      'title':title,
+      'is_done':false,
+      'created_time':Timestamp.now()
+      });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +55,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   Task newTask =Task(
                     title:titleController.text,
                     isDone:false,
-                    createdTime:DateTime.now()
                   );
 
                   //タスク追加
-                  widget.undoneTaskList.add(newTask);
+                  // widget.undoneTaskList.add(newTask);
+                  insertTask(titleController.text);
+
+                  setState(() {
+
+                  });
                   Navigator.pop(context);
                 }, child: Text('追加ボタン')),
               ),

@@ -14,14 +14,11 @@ class TopPage extends StatefulWidget {
 }
 
 class _TopPageState extends State<TopPage> {
-  List<Task> undoneTaskList = [
-    Task(title: 'マムシ', isDone: false, createdTime: DateTime.now()),
-    Task(title: '買い出し', isDone: false, createdTime: DateTime.now()),
-    Task(title: '絶対にマムシになった', isDone: false, createdTime: DateTime.now()),
-    Task(title: '完全なるマムシ', isDone: false, createdTime: DateTime.now()),
-  ];
+
   List<Task> doneTaskList = [];
 
+
+  //三項演算子の判定文で使用する
   bool showUndoneTaskPage = true;
 
   int _counter = 0;
@@ -47,12 +44,9 @@ class _TopPageState extends State<TopPage> {
           // (条件式)　? trueの場合 : falseのタスクの処理
           showUndoneTaskPage
               ? UndoneTaskPage(
-                  undoneTaskList: undoneTaskList,
-                  doneTaskList: doneTaskList,
                 )
               : DoneTaskPage(
-                  undoneTaskList: undoneTaskList,
-                  doneTaskList: doneTaskList,
+                  // doneTaskList: doneTaskList,
                 ),
           Row(
             children: [
@@ -101,7 +95,6 @@ class _TopPageState extends State<TopPage> {
               context,
               MaterialPageRoute(
                   builder: (context) => AddTaskPage(
-                        undoneTaskList: undoneTaskList,
                       )));
           setState(() {});
         },
